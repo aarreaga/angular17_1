@@ -1,0 +1,135 @@
+<div class="container">
+    <h1>{{ welcome }}</h1>
+    <h2>{{ title  }}</h2>
+
+    <ul>
+    <li *ngFor="let task of tareas()">
+        {{ task }}
+    </li>
+    </ul>
+
+    <hr>
+
+    <h2>{{ 'hola '.repeat(4) }}</h2>
+
+    <p>la suma es 3 + 3 es: {{ 3 + 3 }}</p>
+    <p>Hola soy : {{ name() }}</p>
+    <p>Mi edad es: {{ age }}</p>
+
+    <br>
+
+    <img [src]="img" alt="">
+
+    <br>
+
+    <input type="number" [value]="persona().age">
+
+    <br>
+
+    <button [disabled]="disabled"> Click me!</button>
+
+    <p>Persona: {{ persona().name }}</p>
+
+    <br>
+
+    <button (click)="clickHandler()">Prueba de eventos</button>
+
+    <button (dblclick)="clickHandler()">Doble click!</button>
+
+    <p>(change)</p>
+    <input type="number" [value]="persona().age" (change)="inputHandler($event)">
+    <p>(keydown)</p>
+    <input type="text" [value]="persona().name" name="txtnombre" id="txtnombre" (keydown)="keydownHandler($event)">
+    <p>(keydown con un caracter especial o tecla - Shift + t)</p>
+    <input type="text" [value]="persona().age" name="txtedad" id="txtedad" (keydown.shift.t)="clickHandler()">
+
+    <hr>
+    <h1>Signals</h1>
+    <p>{{ name() }}</p>
+    <input type="text" [value]="name()" (keydown)="changeHandler($event)">
+
+    <ul>
+        <p>Elementos totales : {{ tareas().length }}</p>
+        <li *ngFor="let task of tareas(); index as i">
+            {{ i }} {{ task }}
+        </li>
+    </ul>
+    <hr>
+    <div *ngIf="1 === 1">
+        Mi contenido
+    </div>
+
+    <div *ngIf="name() === 'Raul'">
+        Mi nombre es: {{ name() }}
+    </div>
+
+    <hr>
+
+    <main>
+        <section>
+            <h1>Soy un ejemplo</h1>
+            <div>
+                <p>Soy un parrafo</p>
+            </div>
+            <div>
+                <input type="text" id="txtPersonaname" name="txtPersonaname" [value]="persona().name" (change)="changeNamePersonaHandler($event)">
+            </div>
+            <div>
+                <input type="number" [value]="persona().age" (change)="changeAgeHandler($event)">
+            </div>
+
+            <br>
+
+            <div [ngSwitch]="persona().name">
+                <p *ngSwitchCase="'Pedro'">yo soy super {{ persona().name }}</p>
+                <p *ngSwitchCase="'Elvis'">yo soy super {{ persona().name }}</p>
+                <p *ngSwitchCase="'Martha'">yo soy super  {{ persona().name }}</p>
+                <p *ngSwitchCase="'Petra'">yo soy super {{ persona().name }}</p>
+                <p *ngSwitchCase="'Sara'">yo soy super {{ persona().name }}</p>
+                <p *ngSwitchDefault>yo soy nadie conocido!</p>
+            </div>
+
+            <hr>
+
+            <div>
+                <label for="">Ejemplo form control</label>
+                <br>
+                <input type="color" [formControl]="colorControl">                
+            </div>
+            <p>color: {{ colorControl.value }}</p>
+            <div>
+                <svg>
+                    <g>
+                        <rect x="0" y="0" height="100" width="100" [attr.fill]="colorControl.value" />
+                    </g>
+                </svg>
+
+            </div>
+            <div>
+                <label for="">Ejemplo form control con estilo</label>
+                <br>
+                <input type="number" [formControl]="widthControl">   
+                <span class="box" [style.width.px]="widthControl.value"></span>
+            </div>
+
+        </section>
+    </main>
+
+    <div *ngIf="persona().name === 'Enrique' && persona().age > 18; else elseBlock">
+        <p>Soy Enrique y soy mayor de 18 y tengo {{ persona().age }} años</p>
+    </div>
+    <ng-template #elseBlock>
+        Soy {{ persona().name }} y tengo {{ persona().age }}
+    </ng-template>
+
+    <hr>
+    <div>
+        <label for="">Nombre validado con estilo</label><br>
+        <input type="text" id="txtName" name="txtName" [formControl]="nameControl">
+        <br>
+        <span class="message-error" [class.show]="nameControl.invalid && nameControl.touched" >Nombre inválido</span>
+        <br>
+        <input type="text">
+    </div>
+
+</div>
